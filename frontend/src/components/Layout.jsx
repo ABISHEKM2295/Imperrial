@@ -1,8 +1,17 @@
-import { NavLink } from 'react-router-dom';
-import { Home, Flame, Droplets, Package, Settings, Plus } from 'lucide-react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { Home, Flame, Droplets, Package, Settings, Plus, LogOut } from 'lucide-react';
 import './Layout.css';
 
 const Layout = ({ children }) => {
+    const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        navigate('/login');
+    };
+
     return (
         <div className="layout">
             <aside className="sidebar">
@@ -44,7 +53,14 @@ const Layout = ({ children }) => {
                 </nav>
 
                 <div className="sidebar-footer">
-                    <p>© 2026 Imperrial Group</p>
+                    <div className="user-info">
+                        <p className="user-name">{user.name}</p>
+                        <p className="user-email">{user.email}</p>
+                    </div>
+                    <button onClick={handleLogout} className="logout-btn">
+                        <LogOut size={16} />
+                        <span>Logout</span>
+                    </button>
                 </div>
             </aside>
 

@@ -10,6 +10,20 @@ const api = axios.create({
     }
 });
 
+// Add interceptor to include token in requests
+api.interceptors.request.use((config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
+
+// Auth
+export const signup = (data) => api.post('/auth/signup', data);
+export const login = (data) => api.post('/auth/login', data);
+export const getCurrentUser = () => api.get('/auth/me');
+
 // Machines
 export const getMachines = () => api.get('/machines');
 export const createMachine = (data) => api.post('/machines', data);
