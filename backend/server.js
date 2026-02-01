@@ -4,6 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 // Import routes
+import authRoutes from './routes/authRoutes.js';
 import machineRoutes from './routes/machineRoutes.js';
 import steamUsageRoutes from './routes/steamUsageRoutes.js';
 import waterUsageRoutes from './routes/waterUsageRoutes.js';
@@ -26,6 +27,7 @@ mongoose.connect(process.env.MONGODB_URI)
   .catch((err) => console.error('❌ MongoDB connection error:', err));
 
 // Routes
+app.use('/api/auth', authRoutes);
 app.use('/api/machines', machineRoutes);
 app.use('/api/steam-usage', steamUsageRoutes);
 app.use('/api/water-usage', waterUsageRoutes);
